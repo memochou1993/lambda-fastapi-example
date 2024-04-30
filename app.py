@@ -3,7 +3,7 @@ import os
 import aws_cdk
 from dotenv import load_dotenv
 
-from deployment.simple_threads_stack import SimpleThreadsStack
+from deployment.lambda_fastapi_example_stack import LambdaFastapiExampleStack
 
 load_dotenv()
 
@@ -14,9 +14,9 @@ env = aws_cdk.Environment(
     region=os.environ.get("CDK_DEFAULT_REGION"),
 )
 
-SimpleThreadsStack(
+LambdaFastapiExampleStack(
     app,
-    "SimpleThreadsStack",
+    "LambdaFastapiExampleStack",
     env=env,
 )
 

@@ -6,5 +6,8 @@
             "source.organizeImports": "explicit"
         },
         "editor.defaultFormatter": "charliermarsh.ruff"
-    }
+    },
+    "cSpell.words": [
+        "fastapi"
+    ]
 }

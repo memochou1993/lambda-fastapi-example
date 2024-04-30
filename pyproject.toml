@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "simple-threads"
+name = "lambda-fastapi-example"
 version = "0.1.0"
 description = ""
 authors = ["Memo Chou <memochou1993@gmail.com>"]

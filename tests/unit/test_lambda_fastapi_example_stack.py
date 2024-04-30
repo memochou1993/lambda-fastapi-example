@@ -1,14 +1,14 @@
 import aws_cdk as core
 import aws_cdk.assertions as assertions
 
-from deployment.simple_threads_stack import SimpleThreadsStack
+from deployment.lambda_fastapi_example_stack import LambdaFastapiExampleStack
 
 
 # example tests. To run these tests, uncomment this file along with the example
-# resource in deployment/simple_threads_stack.py
+# resource in deployment/lambda_fastapi_example_stack.py
 def test_sqs_queue_created():
     app = core.App()
-    stack = SimpleThreadsStack(app, "simple-threads")
+    stack = LambdaFastapiExampleStack(app, "lambda-fastapi-example")
     template = assertions.Template.from_stack(stack)
 
 

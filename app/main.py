@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from handlers import item_handler
 from mangum import Mangum
 
-app = FastAPI(root_path="/production", title="Simple Threads API")
+app = FastAPI(root_path="/production", title="Lambda FastAPI Example API")
 
 
 @app.get("", include_in_schema=False)

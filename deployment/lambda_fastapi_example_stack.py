@@ -4,7 +4,7 @@ from aws_cdk import BundlingOptions, Duration, Size, Stack, aws_apigateway, aws_
 from constructs import Construct
 
 
-class SimpleThreadsStack(Stack):
+class LambdaFastapiExampleStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -24,8 +24,8 @@ class SimpleThreadsStack(Stack):
     def create_lambda_function(self):
         lambda_role = aws_iam.Role(
             self,
-            "SimpleThreadsLambdaRole",
-            description="Simple Threads Lambda Role",
+            "LambdaFastapiExampleLambdaRole",
+            description="Lambda FastAPI Example Lambda Role",
             assumed_by=aws_iam.CompositePrincipal(
                 aws_iam.ServicePrincipal("lambda.amazonaws.com"),
             ),
@@ -33,22 +33,22 @@ class SimpleThreadsStack(Stack):
         lambda_role.add_managed_policy(
             aws_iam.ManagedPolicy.from_managed_policy_arn(
                 self,
-                "SimpleThreadsAWSLambdaBasicExecutionRolePolicy",
+                "LambdaFastapiExampleAWSLambdaBasicExecutionRolePolicy",
                 "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
             )
         )
         lambda_role.add_managed_policy(
             aws_iam.ManagedPolicy.from_managed_policy_arn(
                 self,
-                "SimpleThreadsAWSLambdaVPCAccessExecutionRolePolicy",
+                "LambdaFastapiExampleAWSLambdaVPCAccessExecutionRolePolicy",
                 "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole",
             )
         )
 
         layer = aws_lambda.LayerVersion(
             self,
-            "SimpleThreadsLambdaLayer",
-            description="Simple Threads Lambda Layer",
+            "LambdaFastapiExampleLambdaLayer",
+            description="Lambda FastAPI Example Lambda Layer",
             code=aws_lambda.Code.from_asset(
                 "deployment/layer",
                 bundling=BundlingOptions(
@@ -70,8 +70,8 @@ class SimpleThreadsStack(Stack):
 
         lambda_function = aws_lambda.Function(
             self,
-            "SimpleThreadsLambdaFunction",
-            description="Simple Threads Lambda Function",
+            "LambdaFastapiExampleLambdaFunction",
+            description="Lambda FastAPI Example Lambda Function",
             runtime=aws_lambda.Runtime.PYTHON_3_12,
             code=aws_lambda.Code.from_asset("app"),
             handler="main.handler",
@@ -92,14 +92,14 @@ class SimpleThreadsStack(Stack):
     def create_api_gateway(self):
         log_group = aws_logs.LogGroup(
             self,
-            "SimpleThreadsLogGroup",
+            "LambdaFastapiExampleLogGroup",
             retention=aws_logs.RetentionDays.ONE_MONTH,
         )
 
         api_gateway = aws_apigateway.RestApi(
             self,
-            "SimpleThreadsApiGateway",
-            description="Simple Threads Api Gateway",
+            "LambdaFastapiExampleApiGateway",
+            description="Lambda FastAPI Example Api Gateway",
             min_compression_size=Size.kibibytes(1),
             endpoint_types=[
                 aws_apigateway.EndpointType.REGIONAL,
@@ -124,8 +124,8 @@ class SimpleThreadsStack(Stack):
         )
 
         usage_plan = api_gateway.add_usage_plan(
-            "SimpleThreadsUsagePlan",
-            description="Simple Threads Usage Plan",
+            "LambdaFastapiExampleUsagePlan",
+            description="Lambda FastAPI Example Usage Plan",
             throttle=aws_apigateway.ThrottleSettings(
                 burst_limit=50,
                 rate_limit=100,
@@ -134,8 +134,8 @@ class SimpleThreadsStack(Stack):
 
         api_key = aws_apigateway.ApiKey(
             self,
-            "SimpleThreadsApiKey",
-            description="Simple Threads Api Key",
+            "LambdaFastapiExampleApiKey",
+            description="Lambda FastAPI Example Api Key",
         )
 
         usage_plan.add_api_key(api_key)
